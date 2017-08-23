@@ -5,10 +5,33 @@ var Queue = function() {
     storage: {},
     count: 0
   };
-  _.extends(queue, queueMethods);
+  _.extend(queue, queueMethods);
   return queue;
 };
 
-var queueMethods = {};
+var queueMethods = {
+  size: function() {
+    return this.count;
+  },
+  enqueue: function(value) {
+    this.storage[this.count] = value;
+    this.count++;
+  },
+  dequeue: function() {
+    var dequeued = this.storage[0];
+    delete this.storage[0];
+    for (var i = 1; i < this.count; i++) {
+      this.storage[i - 1] = this.storage[i];
+    }
+    delete this.storage[this.count - 1];
+    this.count > 0 ? this.count-- : null;
+    return dequeued;
+  }
+
+};
+
+var stack1 = Queue();
+
+console.log(stack1.storage);
 
 

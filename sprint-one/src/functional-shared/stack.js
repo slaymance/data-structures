@@ -10,4 +10,16 @@ var Stack = function() {
   return stack;
 };
 
-var stackMethods = {};
+var stackMethods = {
+  push: function(value) {
+    this.storage[this.count] = value;
+    this.count++; 
+  },
+  pop: function() {
+    var popped = this.storage[this.count - 1];
+    delete this.storage[this.count - 1];
+    this.count > 0 ? this.count-- : this.count; 
+    return popped;
+  },
+  size: function() { return this.count; },
+};

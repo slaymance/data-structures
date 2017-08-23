@@ -29,9 +29,3 @@ var queueMethods = {
   }
 
 };
-
-var stack1 = Queue();
-
-console.log(stack1.storage);
-
-

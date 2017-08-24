@@ -3,7 +3,7 @@ var LinkedList = function() {
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(value) {
+  list.addToTail = function(value) { //O(1)
     //create new Node
     //assign tail to node
     //condition: if the head is null, add tail to head
@@ -23,7 +23,7 @@ var LinkedList = function() {
     }
   };
 
-  list.removeHead = function() {
+  list.removeHead = function() { //O(1)
     //assign current head value to variable, to return later
     //assign head to head.next
     var headValue = list.head.value;
@@ -31,7 +31,7 @@ var LinkedList = function() {
     return headValue;
   };
 
-  list.contains = function(target) {
+  list.contains = function(target) { //O(n)
     // create a function to recursively check each node's value to find target
       // if node.value === target;
       //   return true;

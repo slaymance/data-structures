@@ -67,7 +67,8 @@ describe('doublyLinkedList', function() {
   it('should point to a previous node', function() {
     linkedList.addToTail(4);
     linkedList.addToTail(5);
-    expect(linkedList.tail.previous.to.equal(4));
+    linkedList.addToTail(6);
+    expect(linkedList.tail.previous.value).to.equal(5);
 
   });
 
@@ -76,6 +77,45 @@ describe('doublyLinkedList', function() {
     linkedList.addToTail(5);
     linkedList.removeHead();
     expect(linkedList.contains(4)).to.equal(false);
+  });
+
+  it('should remove both head and tail when remove head, if only node', function() {
+    linkedList.addToTail(4);
+    linkedList.removeHead();
+    expect(linkedList.contains(4)).to.equal(false);
+  });
+  it('should remove both head and tail when remove tail, if only node', function() {
+    linkedList.addToTail(4);
+    linkedList.removeTail();
+    expect(linkedList.contains(4)).to.equal(false);
+  });
+
+  it('should have head.previous property of null when removeHead called', function() {
+    linkedList.addToHead(4);
+    linkedList.addToHead(5);
+    linkedList.removeHead();
+    expect(linkedList.head.previous).to.equal(null);
+  });
+
+  it('should have tail.next property of null when removeTail called', function() {
+    linkedList.addToTail(4);
+    linkedList.addToTail(5);
+    linkedList.removeTail();
+    expect(linkedList.tail.next).to.equal(null);
+  });
+
+  it('should have head.next property of null when removeTail called, if only 2 nodes', function() {
+    linkedList.addToTail(4);
+    linkedList.addToTail(5);
+    linkedList.removeTail();
+    expect(linkedList.head.next).to.equal(null);
+  });
+
+  it('should have tail.previous property of null when removeHead called, if only 2 nodes', function() {
+    linkedList.addToHead(4);
+    linkedList.addToHead(5);
+    linkedList.removeHead();
+    expect(linkedList.tail.previous).to.equal(null);
   });
 
   it('should contain every value that was added', function() {

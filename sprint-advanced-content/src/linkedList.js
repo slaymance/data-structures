@@ -13,22 +13,41 @@ var LinkedList = function() {
     var previousTail = list.tail;
     list.tail = node;
     
-
-    if (list.head === null) {
+    if (!list.head) {
       list.head = node;
-    } else if (list.head.next === null) {
+    } else if (!list.head.next) {
       list.head.next = list.tail;
+      list.tail.previous = list.head;
     } else {
-      previousTail.next = node;
+      previousTail.next = list.tail;
+      list.tail.previous = previousTail;
     }
+
   };
 
   list.addToHead = function(value) {
-    
+    var node = Node(value);
+    var previousHead = list.head;
+    list.head = node;
+
+    if (!list.tail) {
+      list.tail = node;
+    } else if (!list.tail.previous) {
+      // point tail and head to each other
+      list.tail.previous = list.head;
+      list.head.next = list.tail;
+    } else {
+      // point head and previous head to each other
+      previousHead.previous = list.head;
+      list.head.next = previousHead;
+    }
   };
 
   list.removeTail = function() {
-    
+    var tailValue = list.tail.value;
+    list.tail = list.tail.previous;
+    list.tail.next = null;
+    return tailValue;
   };
 
   list.removeHead = function() { //O(1)
@@ -36,6 +55,9 @@ var LinkedList = function() {
     //assign head to head.next
     var headValue = list.head.value;
     list.head = list.head.next;
+    if (list.head) {
+      list.head.previous = null;
+    }
     return headValue;
   };
 

@@ -50,41 +50,28 @@ BinarySearchTree.prototype.depthFirstLog = function(cb) { // O(n)
   iterateTree(this);
 };
 
-BinarySearchTree.prototype.breadthFirstLog = function(cb) {
-  var queue = {
-    container: [this],
-    addToQueue: addToQueue
-  };
+BinarySearchTree.prototype.breadthFirstLog = function(cb) {  // O(n)
+  var queue = [this];
 
-  /*
-  function addToQueue(node) {
-    if (node.left) {
-      queue.push(node.left);
-    }
-    if (node.right) {
-      this.container.push(node.right);
-    }
-  }
-  */
-
-  var queueUpAndCallback = function(node) {
+  var addToQueue = function(node) {
     if (node.left) {
       queue.push(node.left);
     }
     if (node.right) {
       queue.push(node.right);
     }
-    // perform callback on node
+  };
+
+  var executeBreadthLog = function(node) {
+    addToQueue(node);
     cb(node.value);
-    // shift from queue
     queue.shift();
-    // if queue[0] exists, recurse on queue[0]
     if (queue[0]) {
-      queueUpAndCallback(queue[0]);
+      executeBreadthLog(queue[0]);
     }
   };
 
-  queueUpAndCallback(queue[0]);
+  executeBreadthLog(queue[0]);
 };
 
 

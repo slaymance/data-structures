@@ -7,10 +7,33 @@ describe('hashTable', function() {
     hashTable = new HashTable();
   });
 
-  it('should have methods named "insert", "remove", and "retrieve', function() {
+  it('should have methods named "insert", "remove", "retrieve", and "resize"', function() {
     expect(hashTable.insert).to.be.a('function');
     expect(hashTable.remove).to.be.a('function');
     expect(hashTable.retrieve).to.be.a('function');
+    expect(hashTable.resize).to.be.a('function');
+  });
+
+  it('should have a limit that is always greater than or equal to 8', function() {
+    hashTable.insert('John', 'Smith');
+    hashTable.remove('John');
+    expect(hashTable._limit >= 8).to.equal(true);
+  });
+
+  it('should only double limit when resizing', function() {
+    for (var i = 0; i < 6; i++) {
+      hashTable.insert(i, i);
+    }
+    expect(hashTable._limit).to.equal(16);
+  });
+
+  it('should contain all values upon resizing', function() {
+    for (var i = 0; i < 6; i++) {
+      hashTable.insert(i, i);
+    }
+    for (var i = 0; i < 6; i++) {
+      expect(hashTable.retrieve(i)).to.equal(i);
+    }
   });
 
   it('should store values that were inserted', function() {
@@ -48,7 +71,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -58,7 +81,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];

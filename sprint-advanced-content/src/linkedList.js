@@ -44,9 +44,14 @@ var LinkedList = function() {
   };
 
   list.removeTail = function() {
+
     var tailValue = list.tail.value;
     list.tail = list.tail.previous;
-    list.tail.next = null;
+    if (list.tail) {
+      list.tail.next = null;
+    } else {
+      list.head = null;
+    }
     return tailValue;
   };
 
@@ -57,6 +62,8 @@ var LinkedList = function() {
     list.head = list.head.next;
     if (list.head) {
       list.head.previous = null;
+    } else {
+      list.tail = null;
     }
     return headValue;
   };
@@ -70,6 +77,12 @@ var LinkedList = function() {
       // else return false
 
     // return our recursiveFunction(list.head);
+    if (list.head && !list.tail) {
+      console.log('Structure error: should not contain head');
+    } else if (list.tail && !list.head) {
+      console.log('Structure error: should not contain tail');
+    }
+
     var checkNode = function(node) {
       if (node.value === target) {
         return true;
@@ -79,7 +92,7 @@ var LinkedList = function() {
         return false;
       }
     };
-    return checkNode(list.head);    
+    return list.head ? checkNode(list.head) : false;
   };
 
   return list;

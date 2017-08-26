@@ -50,6 +50,43 @@ BinarySearchTree.prototype.depthFirstLog = function(cb) { // O(n)
   iterateTree(this);
 };
 
+BinarySearchTree.prototype.breadthFirstLog = function(cb) {
+  var queue = {
+    container: [this],
+    addToQueue: addToQueue
+  };
+
+  /*
+  function addToQueue(node) {
+    if (node.left) {
+      queue.push(node.left);
+    }
+    if (node.right) {
+      this.container.push(node.right);
+    }
+  }
+  */
+
+  var queueUpAndCallback = function(node) {
+    if (node.left) {
+      queue.push(node.left);
+    }
+    if (node.right) {
+      queue.push(node.right);
+    }
+    // perform callback on node
+    cb(node.value);
+    // shift from queue
+    queue.shift();
+    // if queue[0] exists, recurse on queue[0]
+    if (queue[0]) {
+      queueUpAndCallback(queue[0]);
+    }
+  };
+
+  queueUpAndCallback(queue[0]);
+};
+
 
 /*
  * Complexity: What is the time complexity of the above functions?
